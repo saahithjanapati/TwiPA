@@ -1,1 +1,7 @@
 tweepy
+plotly
+textblob
+re
+tweepy
+snscrape
+pickle

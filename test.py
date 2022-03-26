@@ -1,6 +1,7 @@
 from profileData import profileData
 from config import consumer_key, consumer_secret, access_token, access_token_secret
 import pickle
+from sentiment_analysis import generate_graph
 import tweepy
 
 
@@ -10,10 +11,14 @@ def main():
     api = tweepy.API(auth)
 
 
-    elonMuskData = profileData("elonmusk")
-    elonMuskData.populate(api)
-    filehandler = open("elonMuskData.pb", 'wb')
-    pickle.dump(elonMuskData, filehandler)
+    # elonMuskData = profileData("elonmusk")
+    # elonMuskData.populate(api=api)
+
+    # print(elonMuskData.tweets)
+    # filehandler = open("elonMuskData.pb", 'wb')
+    # pickle.dump(elonMuskData, filehandler)
+    elonMuskData = pickle.load(open("elonMuskData.pb", "rb"))
+    generate_graph(elonMuskData.tweets)
 
 
 

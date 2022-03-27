@@ -4,11 +4,6 @@ import re
 import plotly.graph_objects as go
 import plotly.express as px
 
-# defining these as global variables to save some compute time
-# objectivity_sum = 0
-# polarity_sum = 0
-# num_tweets = 0
-
 def generate_polarity_graph(tweets, sliding_window_size=5):
     graph_data = {"date":[], "sentiment":[]}
     for tweet in tweets:
@@ -36,19 +31,13 @@ def generate_objectivity_graph(tweets, sliding_window_size=5):
     return fig
 
 def get_polarity(tweet):
-    # global polarity_sum
-    # global num_tweets
     cleaned_tweet = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
     polarity_val = TextBlob(cleaned_tweet).sentiment.polarity
-    # polarity_sum += polarity_val
-    # num_tweets += 1
     return polarity_val
 
 def get_objectivity(tweet):
-    # global objectivity_sum
     cleaned_tweet = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
     objectivity_val = TextBlob(cleaned_tweet).sentiment.subjectivity
-    # objectivity_sum += objectivity_val
     return objectivity_val
 
 def get_polarity_score(tweets):

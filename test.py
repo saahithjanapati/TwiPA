@@ -11,13 +11,17 @@ def main():
     api = tweepy.API(auth)
 
 
-    # elonMuskData = profileData("elonmusk")
-    # elonMuskData.populate(api=api)
+    elonMuskData = profileData("lexfridman")
+    elonMuskData.populate(api=api, num_tweets=100)
+
+    # profileData = 
 
     # print(elonMuskData.tweets)
     # filehandler = open("elonMuskData.pb", 'wb')
     # pickle.dump(elonMuskData, filehandler)
-    elonMuskData = pickle.load(open("elonMuskData.pb", "rb"))
+    
+    
+    # elonMuskData = pickle.load(open("elonMuskData.pb", "rb"))
     generate_graph(elonMuskData.tweets)
 
 

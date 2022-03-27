@@ -17,6 +17,7 @@ class profileData:
     tweets = []
 
     def __init__(self, username:str):
+        print("initialized object")
         self.screen_name = username
 
     def populate(self, num_tweets=1000, api=None):
@@ -44,7 +45,3 @@ class profileData:
         self.profile_image_url = user.profile_image_url
         self.verified = user.verified
         return
-
-
-        
-    

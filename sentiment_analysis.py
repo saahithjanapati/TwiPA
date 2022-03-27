@@ -23,6 +23,10 @@ def get_sentiment(tweet):
     cleaned_tweet = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
     return TextBlob(cleaned_tweet).sentiment.polarity
 
+def objectivity(tweet):
+    cleaned_tweet = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
+    return TextBlob(cleaned_tweet).sentiment.polarity
+
 def get_moving_average(data, window_size=10):
     i = window_size
     moving_averages = []

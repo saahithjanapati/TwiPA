@@ -30,13 +30,17 @@ app.layout = html.Div(children=[
                                       html.H1('TwiPA - Sentiment Analysis'),
 
                                       html.P('''Enter a Twitter Username of your choice.'''),
+
                                       dcc.Loading(id="loading-1", type="default",children=html.Div(id="loading-output-1")), 
-
-                                      html.Div(dcc.Input(id='my-input', value='elonmusk', type='text')),
-
+                                      html.Div(className = 'textField', children=[dcc.Input(id='my-input', value='elonmusk', type='text')]),
+                                        html.P('''Choose number of tweets you want to analyze'''),
                                       html.P('''Choose number of tweets you want to analyze'''),
 
                                       dcc.Slider(50, 1000, 50,value=50,id='my-slider'),
+
+                                      html.Br(),
+                                      html.Br(),
+
                                       html.Div(className = 'image-cropper', 
                                       children = [
                                           html.Img(src="https://pbs.twimg.com/profile_images/1503591435324563456/foUrqiEw_400x400.jpg", id="profile-pic", className = 'rounded')
@@ -112,7 +116,8 @@ def update_output(value, selected_number_tweets):
     if profileData.verified :
         return True, fig1, fig2, fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
 
-    return True, fig1, fig2, fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}, num_followers
+    return True, fig1.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig2.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
+
 
 
 @app.callback(

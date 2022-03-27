@@ -6,3 +6,5 @@ snscrape
 dash
 dash-bootstrap-components
 matplotlib
+sklearn
+pandas

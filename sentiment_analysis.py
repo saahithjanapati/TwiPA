@@ -1,31 +1,67 @@
+from matplotlib.pyplot import polar
 from textblob import TextBlob
 import re
 import plotly.graph_objects as go
 import plotly.express as px
 
-def generate_graph(tweets, sliding_window_size=5):
+# defining these as global variables to save some compute time
+# objectivity_sum = 0
+# polarity_sum = 0
+# num_tweets = 0
+
+def generate_polarity_graph(tweets, sliding_window_size=5):
     graph_data = {"date":[], "sentiment":[]}
     for tweet in tweets:
         graph_data["date"].append(tweet["date"])
-        graph_data["sentiment"].append(get_sentiment(tweet["content"]))
+        graph_data["sentiment"].append(get_polarity(tweet["content"]))
     
     fig = go.Figure()
-    # fig.add_trace(go.Scatter(x=graph_data["date"], y=graph_data["sentiment"], mode='markers', marker_color = graph_data["sentiment"], marker_colorscale=px.colors.sequential.Viridis, name="Sentiment"))
-    fig = px.scatter(x=graph_data["date"], y=graph_data["sentiment"], color_continuous_scale='viridis', color = graph_data["sentiment"])
+    fig = px.scatter(x=graph_data["date"], y=graph_data["sentiment"], title="Positivity vs Time", color_continuous_scale='viridis', color = graph_data["sentiment"])
     smoothed_data = get_moving_average(graph_data["sentiment"], sliding_window_size)
-    # fig.add_trace(go.Scatter(x=graph_data["date"][sliding_window_size:], y=smoothed_data, mode='lines', marker_color="black", name="Running Average"))
-    # fig.add_trace(graph_data["date"][sliding_window_size:], smoothed_data, mode='lines', color="black")
     fig.add_traces(list(px.line(x=graph_data["date"][sliding_window_size:], y=smoothed_data).select_traces()))
-    # fig.show()
+    return fig    
+
+
+def generate_objectivity_graph(tweets, sliding_window_size=5):
+    graph_data = {"date":[], "objectivity":[]}
+    for tweet in tweets:
+        graph_data["date"].append(tweet["date"])
+        graph_data["objectivity"].append(get_objectivity(tweet["content"]))
+    
+    fig = go.Figure()
+
+    fig = px.scatter(x=graph_data["date"], y=graph_data["objectivity"], title="Subjectivity vs Time", color_continuous_scale='viridis', color = graph_data["objectivity"])
+    smoothed_data = get_moving_average(graph_data["objectivity"], sliding_window_size)
+    fig.add_traces(list(px.line(x=graph_data["date"][sliding_window_size:], y=smoothed_data).select_traces()))
     return fig
 
-def get_sentiment(tweet):
+def get_polarity(tweet):
+    # global polarity_sum
+    # global num_tweets
     cleaned_tweet = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
-    return TextBlob(cleaned_tweet).sentiment.polarity
+    polarity_val = TextBlob(cleaned_tweet).sentiment.polarity
+    # polarity_sum += polarity_val
+    # num_tweets += 1
+    return polarity_val
 
-def objectivity(tweet):
+def get_objectivity(tweet):
+    # global objectivity_sum
     cleaned_tweet = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
-    return TextBlob(cleaned_tweet).sentiment.polarity
+    objectivity_val = TextBlob(cleaned_tweet).sentiment.subjectivity
+    # objectivity_sum += objectivity_val
+    return objectivity_val
+
+def get_polarity_score(tweets):
+    polarity_sum = 0
+    for tweet in tweets:
+        polarity_sum += get_polarity(tweet["content"])
+    return polarity_sum/len(tweets)
+
+def get_objectivity_score(tweets):
+    objectivity_sum = 0
+    for tweet in tweets:
+        objectivity_sum += get_objectivity(tweet["content"])
+    return objectivity_sum/len(tweets)
 
 def get_moving_average(data, window_size=10):
     i = window_size

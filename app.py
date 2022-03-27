@@ -4,14 +4,8 @@ import plotly.express as px
 import pandas as pd
 import tweepy
 
-from sentiment_analysis import generate_graph
+from sentiment_analysis import *
 from config import consumer_key, consumer_secret, access_token, access_token_secret
-
-
-
-
-import plotly.express as px
-import plotly.graph_objects as go
 
 
 app = Dash(__name__)
@@ -30,33 +24,51 @@ app.layout = html.Div(children=[
                                       html.P('''Visualising time series with Plotly - Dash'''),
                                       html.P('''Enter a Twitter Username of your choice.'''),
                                       html.Div(dcc.Input(id='my-input', value='elonmusk', type='text')),
+                                        html.P('''Choose number of tweets you want to analyze'''),
+
+                                      dcc.Slider(50, 1000, 50,value=50,id='my-slider'),
                                       html.H6(id="full-name"),
                                       html.Img(src="https://pbs.twimg.com/profile_images/1503591435324563456/foUrqiEw_400x400.jpg", id="profile-pic"),
+                                      html.H6(id="positivity-score", children="Positivity-Score (1 is the most positive):"),
+                                      html.H6(id="subjectivity-score", children="Subjectivity-Score (1 is the most subjective):")
                                       ]
                                   ),  # Define the left element
                                   html.Div(className='eight columns div-for-charts bg-grey', 
                                   children = [
-                                      dcc.Graph(id='sentiment-graph')
+                                      dcc.Graph(id='sentiment-graph'), dcc.Graph(id='objectivity-graph')
                                   ])  # Define the right element
                                   ])
                                 ])
 
-
 @app.callback(
     Output('sentiment-graph', 'figure'),
+    Output('objectivity-graph', 'figure'),
     Output('full-name', component_property='children'),
     Output('profile-pic', component_property='src'),
-    Input(component_id='my-input', component_property='value'))
-def update_output(value):
+    Output('positivity-score', component_property='children'),
+    Output('subjectivity-score', component_property='children'),
+    Input(component_id='my-input', component_property='value'),
+    Input(component_id='my-slider', component_property='value')
+    )
+def update_output(value, selected_number_tweets):
     from profileData import profileData
     profileData = profileData(value)
-    profileData.populate(api=api, num_tweets=100)
+    profileData.populate(api=api, num_tweets=selected_number_tweets)
 
-    fig = generate_graph(profileData.tweets)
-    fig.update_layout(transition_duration=500)
+    # graphs
+    fig1 = generate_polarity_graph(profileData.tweets)
+    fig1.update_layout(transition_duration=500)
+    fig2 = generate_objectivity_graph(profileData.tweets)
+    fig2.update_layout(transition_duration=500)
+
+    #sentiment scores
+    positivity_string = "Positivity-Score (1 is the most positive): " + (str(get_polarity_score(profileData.tweets))[0:5])
+    objectivity_string = "Subjectivity-Score (1 is the most subjective): " + (str(get_objectivity_score(profileData.tweets))[0:5])
+
+
     name = profileData.name
     profile_image_url = profileData.profile_image_url
-    return fig, name, profile_image_url
+    return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string
 
 
 if __name__ == '__main__':

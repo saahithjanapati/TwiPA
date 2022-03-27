@@ -25,13 +25,18 @@ app.layout = html.Div(children=[
                                children=[
                                   html.Div(className='four columns div-user-controls', 
                                   children = [
-                                      html.H2('TwIPA - Sentiment Analysis'),
+                                      html.Div(className='h2', children=[html.H2('TwIPA - Sentiment Analysis')]),
                                       html.P('''Visualising time series with Plotly - Dash'''),
-                                      html.P('''Enter a Twitter Username of your choice.'''),
-                                      html.Div(dcc.Input(id='my-input', value='elonmusk', type='text')),
-                                        html.P('''Choose number of tweets you want to analyze'''),
+                                      html.Br(),
+                                      html.H4('''Enter a Twitter Username of your choice.'''),
+                                      html.Div(className = 'textBox', children = [
+                                          dcc.Input(id='my-input', value='elonmusk', type='text')
+                                      ]),
+                                      html.P('''Choose number of tweets you want to analyze'''),
 
                                       dcc.Slider(50, 1000, 50,value=50,id='my-slider'),
+
+                                      html.Br(),
 
                                       html.Div(className = 'image-cropper', 
                                       children = [
@@ -59,7 +64,8 @@ app.layout = html.Div(children=[
                                   ),  # Define the left element
                                   html.Div(className='eight columns div-for-charts bg-grey', 
                                   children = [
-                                      dcc.Graph(id='sentiment-graph'), dcc.Graph(id='objectivity-graph')
+                                      dcc.Graph(id='sentiment-graph'), 
+                                      dcc.Graph(id='objectivity-graph')
                                   ])  # Define the right element
                                   ])
                                 ])
@@ -102,9 +108,9 @@ def update_output(value, selected_number_tweets):
     num_followers = "Number of Followers: " + str(profileData.followers_count)
 
     if profileData.verified :
-        return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
+        return fig1.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig2.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
 
-    return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}, num_followers
+    return fig1.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig2.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}, num_followers
 
 
 @app.callback(

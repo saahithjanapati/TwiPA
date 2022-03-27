@@ -11,9 +11,15 @@ def generate_polarity_graph(tweets, sliding_window_size=5):
         graph_data["sentiment"].append(get_polarity(tweet["content"]))
     
     fig = go.Figure()
-    fig = px.scatter(x=graph_data["date"], y=graph_data["sentiment"], title="Positivity vs Time", color_continuous_scale='viridis', color = graph_data["sentiment"])
+    
+    
+    fig = px.scatter(x=graph_data["date"], y=graph_data["sentiment"], title="Positivity vs Time", color_continuous_scale='viridis', color = graph_data["sentiment"], template='plotly_dark')
+    
+    
     smoothed_data = get_moving_average(graph_data["sentiment"], sliding_window_size)
     fig.add_traces(list(px.line(x=graph_data["date"][sliding_window_size:], y=smoothed_data).select_traces()))
+
+    fig.update_layout(title_x=0.5)
     return fig    
 
 
@@ -25,9 +31,10 @@ def generate_objectivity_graph(tweets, sliding_window_size=5):
     
     fig = go.Figure()
 
-    fig = px.scatter(x=graph_data["date"], y=graph_data["objectivity"], title="Subjectivity vs Time", color_continuous_scale='viridis', color = graph_data["objectivity"])
+    fig = px.scatter(x=graph_data["date"], y=graph_data["objectivity"], title="Subjectivity vs Time", color_continuous_scale='viridis', color = graph_data["objectivity"], template='plotly_dark')
     smoothed_data = get_moving_average(graph_data["objectivity"], sliding_window_size)
     fig.add_traces(list(px.line(x=graph_data["date"][sliding_window_size:], y=smoothed_data).select_traces()))
+    fig.update_layout(title_x=0.5)
     return fig
 
 def get_polarity(tweet):

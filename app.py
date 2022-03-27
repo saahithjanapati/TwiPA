@@ -13,6 +13,7 @@ from config import consumer_key, consumer_secret, access_token, access_token_sec
 
 
 app = Dash(__name__, external_stylesheets=[dbc.icons.BOOTSTRAP])
+server = app.server
 
 auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
 api = tweepy.API(auth)
@@ -34,7 +35,9 @@ app.layout = html.Div(children=[
 
                                       dcc.Loading(id="loading-1", type="default",children=html.Div(id="loading-output-1")), 
                                       html.Div(className = 'textField', children=[dcc.Input(id='my-input', value='elonmusk', type='text')]),
-                                        html.P('''Choose number of tweets you want to analyze'''),
+
+                                      html.Br(),
+
                                       html.P('''Choose number of tweets you want to analyze'''),
 
                                       dcc.Slider(50, 1000, 100,value=250,id='my-slider'),
@@ -42,17 +45,21 @@ app.layout = html.Div(children=[
                                       html.Br(),
                                       html.Br(),
 
+                                      
+
                                       html.Div(className = 'image-cropper', 
                                       children = [
                                           html.Img(src="https://pbs.twimg.com/profile_images/1503591435324563456/foUrqiEw_400x400.jpg", id="profile-pic", className = 'rounded')
                                       ]),
 
-                                      html.Div(html.H6(className = 'parent', id="full-name")),
-                                      
-                                      html.Div(id = "verified", className = 'child',
-                                      children = [
-                                          html.I(className="bi bi-check-circle-fill")
-                                          ], style = {'display': 'block'}),
+                                      html.Div(className = 'container', children = [
+                                          html.H6(className = 'parent', id="full-name"),
+                                          html.Div(id = "verified", className = 'child',
+                                            children = [
+                                                html.I(className="bi bi-check-circle-fill")
+                                                ], style = {'display': 'block'})
+
+                                      ]),
 
                                       html.Br(),
                                       html.Br(),

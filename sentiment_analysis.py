@@ -34,6 +34,7 @@ def generate_objectivity_graph(tweets, sliding_window_size=5):
     fig = px.scatter(x=graph_data["date"], y=graph_data["objectivity"], title="Subjectivity vs Time", color_continuous_scale='viridis', color = graph_data["objectivity"], template='plotly_dark')
     smoothed_data = get_moving_average(graph_data["objectivity"], sliding_window_size)
     fig.add_traces(list(px.line(x=graph_data["date"][sliding_window_size:], y=smoothed_data).select_traces()))
+    
     fig.update_layout(title_x=0.5)
     return fig
 

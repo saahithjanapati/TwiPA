@@ -19,8 +19,10 @@ def cluster(tweets):
     kmeans = KMeans(n_clusters=4, max_iter=600, algorithm = 'auto')
     fitted = kmeans.fit(Y_sklearn)
     predictions = kmeans.predict(Y_sklearn)
-    fig = px.scatter(Y_sklearn[:, 0], Y_sklearn[:, 1], color=predictions, color_continuous_scale='viridis')
+    fig = px.scatter(Y_sklearn[:, 0], Y_sklearn[:, 1], color=predictions, color_continuous_scale='viridis', template='plotly_dark')
     fig.update_traces(marker=dict(size=30))
+    
+
     return fig
 
 

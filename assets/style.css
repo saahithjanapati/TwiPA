@@ -660,3 +660,7 @@ img {
   padding: 1rem 1rem;
   vertical-align: middle;
 }
+
+.textField {
+  padding-left: 10px;
+}

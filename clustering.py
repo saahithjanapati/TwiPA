@@ -18,7 +18,7 @@ def generate_score_to_tweet_dict(tweets, tfidfvectorizer, sklearn_pca):
         Y_sklearn = sklearn_pca.fit_transform(tf_idf_array)
         print(Y_sklearn)
         score = kmeans.predict(Y_sklearn)
-        score_to_tweet_dict[score[0]] = tweet["content"]
+        score_to_tweet_dict[score[0]] = [tweet["content"], "https://twitter.com/twitter/status/" + str(tweet["id"])]
     return score_to_tweet_dict
 
 """"from https://towardsdatascience.com/k-means-clustering-8e1e64c1561c"""
@@ -57,8 +57,9 @@ def cluster(tweets):
     pca_to_tweet_dict = {}
     x = df["X"]
     content = df["content"]
-
-    pca_to_tweet_dict = {x[i]:content[i] for i in range(len(x))}
+    ids = df["id"]
+    # [tweet["content"], "https://twitter.com/twitter/status/" + str(tweet["id"])]
+    pca_to_tweet_dict = {x[i]:[content[i], "https://twitter.com/twitter/status/" + str(ids[i])] for i in range(len(x))}
     # for row in df:
     #     print(row)
     #     print(row["X"])

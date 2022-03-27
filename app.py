@@ -33,8 +33,10 @@ app.layout = html.Div(children=[
 
                                       html.P('''Enter a Twitter Username of your choice.'''),
 
-                                      dcc.Loading(id="loading-1", type="default",children=html.Div(id="loading-output-1")), 
-                                      html.Div(className = 'textField', children=[dcc.Input(id='my-input', value='elonmusk', type='text')]),
+                                      html.Div(className='containerTwo', children = [
+                                          html.Div(className = 'textField', children=[dcc.Input(id='my-input', value='elonmusk', type='text')]),
+                                          dcc.Loading(id="loading-1", type="default",children=html.Div(id="loading-output-1"))
+                                      ]),
 
                                       html.Br(),
 
@@ -70,7 +72,9 @@ app.layout = html.Div(children=[
 
                                       html.Br(),
 
-                                      html.H6(id='hover-data')
+                                      html.H6(id='hover-data'),
+
+                                      html.A(id='hover-data-link'),
                                       ]
                                   ),  # Define the left element
                                   html.Div(className='eight columns div-for-charts bg-grey', 
@@ -133,6 +137,7 @@ def update_output(value, selected_number_tweets):
 
 @app.callback(
     Output('hover-data', 'children'),
+    Output('hover-data-link', 'children'),
     Input('sentiment-graph', 'hoverData'),
     Input('objectivity-graph', 'hoverData'),
     Input('cluster-graph', 'hoverData')
@@ -142,7 +147,7 @@ def display_hover_data(hoverData1, hoverData2, hoverData3):
     global pca_to_tweet_dict
     ctx = dash.callback_context
     if not ctx.triggered:
-        return ""
+        return "", ""
     else:
         hoverData = None
         if 'sentiment-graph' in ctx.triggered[0]['prop_id']:
@@ -150,20 +155,22 @@ def display_hover_data(hoverData1, hoverData2, hoverData3):
             hoverData = hoverData["points"][0]
             if hoverData["curveNumber"] == 0:
                 time = hoverData["x"]
-                return "Tweet: " + str(time_to_tweet_dict[time][0])
+                return "Tweet: " + str(time_to_tweet_dict[time][0]), time_to_tweet_dict[time][2]
         
         elif 'objectivity-graph' in ctx.triggered[0]['prop_id']:
             hoverData = hoverData2
             hoverData = hoverData["points"][0]
             if hoverData["curveNumber"] == 0:
                 time = hoverData["x"]
-                return "Tweet: " + str(time_to_tweet_dict[time][0])
+                return "Tweet: " + str(time_to_tweet_dict[time][0]), time_to_tweet_dict[time][2]
        
         elif 'cluster-graph' in ctx.triggered[0]['prop_id']:
             hoverData = hoverData3
             hoverData = hoverData["points"][0]
             print(hoverData)
-            return "Tweet: " + str(pca_to_tweet_dict[hoverData["x"]])
+            # print(pca_to_tweet_dict)
+            print(len(pca_to_tweet_dict))
+            return "Tweet: " + str(pca_to_tweet_dict[hoverData["x"]][0]), pca_to_tweet_dict[hoverData["x"]][1]
 
 
 if __name__ == '__main__':

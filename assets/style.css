@@ -639,6 +639,9 @@ a {
   position: relative;
   overflow: hidden;
   border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  
 }
 
 img {
@@ -650,17 +653,32 @@ img {
 }
 
 .parent {
-  padding-left: 35px;
-
-  padding-right: 10px;
-  float: left; 
+  padding-right: 5px;
   text-align: center;
+  
 }
 .child {
   padding: 1rem 1rem;
+
   vertical-align: middle;
+  text-align: center;
+
 }
 
 .textField {
   padding-left: 10px;
+  padding-right: 40px;
 }
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.containerTwo {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+

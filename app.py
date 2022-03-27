@@ -20,6 +20,7 @@ api = tweepy.API(auth)
 fig = go.Figure()
 
 global time_to_tweet_dict
+global pca_to_tweet_dict
 
 app.layout = html.Div(children=[
                       html.Div(className='row',  # Define the row element
@@ -36,7 +37,7 @@ app.layout = html.Div(children=[
                                         html.P('''Choose number of tweets you want to analyze'''),
                                       html.P('''Choose number of tweets you want to analyze'''),
 
-                                      dcc.Slider(50, 1000, 50,value=50,id='my-slider'),
+                                      dcc.Slider(50, 1000, 100,value=250,id='my-slider'),
 
                                       html.Br(),
                                       html.Br(),
@@ -90,7 +91,10 @@ app.layout = html.Div(children=[
     Input(component_id='my-slider', component_property='value')
     )
 def update_output(value, selected_number_tweets):
+    # dictionaries used to get tweets for hovering
     global time_to_tweet_dict
+    global pca_to_tweet_dict
+
     from profileData import profileData
     profileData = profileData(value)
     profileData.populate(api=api, num_tweets=selected_number_tweets)
@@ -101,7 +105,7 @@ def update_output(value, selected_number_tweets):
     fig1.update_layout(transition_duration=500)
     fig2 = generate_objectivity_graph(profileData.tweets)
     fig2.update_layout(transition_duration=500)
-    fig3 = cluster(profileData.tweets)
+    fig3, pca_to_tweet_dict = cluster(profileData.tweets)
     fig3.update_layout(transition_duration=500)
 
     #sentiment scores
@@ -123,9 +127,12 @@ def update_output(value, selected_number_tweets):
 @app.callback(
     Output('hover-data', 'children'),
     Input('sentiment-graph', 'hoverData'),
-    Input('objectivity-graph', 'hoverData'))
-def display_hover_data(hoverData1, hoverData2):
+    Input('objectivity-graph', 'hoverData'),
+    Input('cluster-graph', 'hoverData')
+    )
+def display_hover_data(hoverData1, hoverData2, hoverData3):
     global time_to_tweet_dict 
+    global pca_to_tweet_dict
     ctx = dash.callback_context
     if not ctx.triggered:
         return ""
@@ -133,12 +140,24 @@ def display_hover_data(hoverData1, hoverData2):
         hoverData = None
         if 'sentiment-graph' in ctx.triggered[0]['prop_id']:
             hoverData = hoverData1
+            hoverData = hoverData["points"][0]
+            if hoverData["curveNumber"] == 0:
+                time = hoverData["x"]
+                return "Tweet: " + str(time_to_tweet_dict[time][0])
+        
         elif 'objectivity-graph' in ctx.triggered[0]['prop_id']:
             hoverData = hoverData2
-    hoverData = hoverData["points"][0]
-    if hoverData["curveNumber"] == 0:
-        time = hoverData["x"]
-        return "Tweet: " + str(time_to_tweet_dict[time][0])
+            hoverData = hoverData["points"][0]
+            if hoverData["curveNumber"] == 0:
+                time = hoverData["x"]
+                return "Tweet: " + str(time_to_tweet_dict[time][0])
+       
+        elif 'cluster-graph' in ctx.triggered[0]['prop_id']:
+            hoverData = hoverData3
+            hoverData = hoverData["points"][0]
+            print(hoverData)
+            return "Tweet: " + str(pca_to_tweet_dict[hoverData["x"]])
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)

@@ -19,7 +19,7 @@ def generate_polarity_graph(tweets, sliding_window_size=5):
     smoothed_data = get_moving_average(graph_data["sentiment"], sliding_window_size)
     fig.add_traces(list(px.line(x=graph_data["date"][sliding_window_size:], y=smoothed_data).select_traces()))
 
-    fig.update_layout(title_x=0.5)
+    fig.update_layout(title_x=0.5, yaxis_title="Positivity", xaxis_title="Date", )
     return fig    
 
 
@@ -35,7 +35,7 @@ def generate_objectivity_graph(tweets, sliding_window_size=5):
     smoothed_data = get_moving_average(graph_data["objectivity"], sliding_window_size)
     fig.add_traces(list(px.line(x=graph_data["date"][sliding_window_size:], y=smoothed_data).select_traces()))
     
-    fig.update_layout(title_x=0.5)
+    fig.update_layout(title_x=0.5, yaxis_title="Subjectivity", xaxis_title="Date")
     return fig
 
 def get_polarity(tweet):

@@ -50,25 +50,21 @@ def cluster(tweets):
     print(px.data.iris())
 
     fig = px.scatter_3d(graph_data, x='X', y='Y', z='Z', title="PCA and K-Means Clustering", color=predictions, color_continuous_scale='viridis', template='plotly_dark')
-    
+    fig.update_layout(title_x=0.5)
     fig.update_traces(marker=dict(size=10))
     # fig = go.Figure(data=[go.Scatter3d(x=Y_sklearn[0], y=Y_sklearn[1], z=Y_sklearn[2],mode='markers'), color=predictions])
     
+    pca_to_tweet_dict = {}
+    x = df["X"]
+    content = df["content"]
+
+    pca_to_tweet_dict = {x[i]:content[i] for i in range(len(x))}
+    # for row in df:
+    #     print(row)
+    #     print(row["X"])
+    #     print(row["content"])
+
+    #     pca_to_tweet_dict[row["X"]] = row["content"]
 
     # generate_score_to_tweet_dict(tweets, tfidfvectorizer, sklearn_pca)
-    return fig
-
-
-def get_top_features_cluster(tf_idf_array, prediction, n_feats):
-    labels = np.unique(prediction)
-    dfs = []
-    for label in labels:
-        id_temp = np.where(prediction==label) # indices for each cluster
-        x_means = np.mean(tf_idf_array[id_temp], axis = 0) # returns average score across cluster
-        sorted_means = np.argsort(x_means)[::-1][:n_feats] # indices with top 20 scores
-        features = tf_idf_vectorizor.get_feature_names()
-        best_features = [(features[i], x_means[i]) for i in sorted_means]
-        df = pd.DataFrame(best_features, columns = ['features', 'score'])
-        dfs.append(df)
-    return dfs
-# dfs = get_top_features_cluster(tf_idf_array, prediction, 15)
+    return fig, pca_to_tweet_dict

@@ -29,7 +29,7 @@ app.layout = html.Div(children=[
                                   html.Div(className='four columns div-user-controls', 
                                   children = [
 
-                                      html.H1('TwiPA - Sentiment Analysis'),
+                                      html.H1('TwiPA'),
 
                                       html.P('''Enter a Twitter Username of your choice.'''),
 

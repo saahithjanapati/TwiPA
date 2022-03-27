@@ -5,3 +5,4 @@ tweepy
 snscrape
 dash
 dash-bootstrap-components
+matplotlib

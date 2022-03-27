@@ -32,16 +32,29 @@ app.layout = html.Div(children=[
                                         html.P('''Choose number of tweets you want to analyze'''),
 
                                       dcc.Slider(50, 1000, 50,value=50,id='my-slider'),
-                                      html.Img(src="https://pbs.twimg.com/profile_images/1503591435324563456/foUrqiEw_400x400.jpg", id="profile-pic"),
-                                      html.H6(id="full-name"),
-                                      html.Div(id = "verified",
+
+                                      html.Div(className = 'image-cropper', 
                                       children = [
-                                          html.H6('verified'),
+                                          html.Img(src="https://pbs.twimg.com/profile_images/1503591435324563456/foUrqiEw_400x400.jpg", id="profile-pic", className = 'rounded')
+                                      ]),
+
+                                      html.Div(html.H6(className = 'parent', id="full-name")),
+                                      
+                                      html.Div(id = "verified", className = 'child',
+                                      children = [
                                           html.I(className="bi bi-check-circle-fill")
-                                      ], style = {'display': 'block'}),
+                                          ], style = {'display': 'block'}),
+
+                                      html.Br(),
+                                      html.Br(),
+
+                                      html.H6(id="num-followers"),
                                       html.H6(id="positivity-score", children="Positivity-Score (1 is the most positive):"),
                                       html.H6(id="subjectivity-score", children="Subjectivity-Score (1 is the most subjective):"),
-                                      html.Pre(id='hover-data')
+
+                                      html.Br(),
+
+                                      html.H6(id='hover-data')
                                       ]
                                   ),  # Define the left element
                                   html.Div(className='eight columns div-for-charts bg-grey', 
@@ -59,6 +72,8 @@ app.layout = html.Div(children=[
     Output('positivity-score', component_property='children'),
     Output('subjectivity-score', component_property='children'),
     Output('verified', component_property='style'),
+    Output('num-followers', component_property='children'),
+
     Input(component_id='my-input', component_property='value'),
     Input(component_id='my-slider', component_property='value')
     )
@@ -84,10 +99,12 @@ def update_output(value, selected_number_tweets):
     name = profileData.name
     profile_image_url = profileData.profile_image_url
 
-    if profileData.verified :
-        return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}
+    num_followers = "Number of Followers: " + str(profileData.followers_count)
 
-    return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}
+    if profileData.verified :
+        return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
+
+    return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}, num_followers
 
 
 @app.callback(
@@ -108,7 +125,7 @@ def display_hover_data(hoverData1, hoverData2):
     hoverData = hoverData["points"][0]
     if hoverData["curveNumber"] == 0:
         time = hoverData["x"]
-        return time_to_tweet_dict[time][0]
+        return "Tweet: " + str(time_to_tweet_dict[time][0])
 
 if __name__ == '__main__':
     app.run_server(debug=True)

@@ -26,13 +26,17 @@ app.layout = html.Div(children=[
                                children=[
                                   html.Div(className='four columns div-user-controls', 
                                   children = [
-                                      html.H2('TwiPA - Sentiment Analysis'),
+
+                                      html.H1('TwiPA - Sentiment Analysis'),
+
                                       html.P('''Enter a Twitter Username of your choice.'''),
+                                      dcc.Loading(id="loading-1", type="default",children=html.Div(id="loading-output-1")), 
+
                                       html.Div(dcc.Input(id='my-input', value='elonmusk', type='text')),
-                                        html.P('''Choose number of tweets you want to analyze'''),
+
+                                      html.P('''Choose number of tweets you want to analyze'''),
 
                                       dcc.Slider(50, 1000, 50,value=50,id='my-slider'),
-
                                       html.Div(className = 'image-cropper', 
                                       children = [
                                           html.Img(src="https://pbs.twimg.com/profile_images/1503591435324563456/foUrqiEw_400x400.jpg", id="profile-pic", className = 'rounded')
@@ -67,6 +71,7 @@ app.layout = html.Div(children=[
                                 ])
 
 @app.callback(
+    Output('loading-output-1', "children"),
     Output('sentiment-graph', 'figure'),
     Output('objectivity-graph', 'figure'),
     Output('cluster-graph', 'figure'),
@@ -105,9 +110,9 @@ def update_output(value, selected_number_tweets):
     num_followers = "Number of Followers: " + str(profileData.followers_count)
 
     if profileData.verified :
-        return fig1, fig2, fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
+        return True, fig1, fig2, fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
 
-    return fig1, fig2, fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}, num_followers
+    return True, fig1, fig2, fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}, num_followers
 
 
 @app.callback(

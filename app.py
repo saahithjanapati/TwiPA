@@ -6,9 +6,9 @@ import tweepy
 
 from sentiment_analysis import *
 from config import consumer_key, consumer_secret, access_token, access_token_secret
+import dash_bootstrap_components as dbc
 
-
-app = Dash(__name__)
+app = Dash(__name__, external_stylesheets=[dbc.icons.BOOTSTRAP])
 
 auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
 api = tweepy.API(auth)
@@ -27,8 +27,13 @@ app.layout = html.Div(children=[
                                         html.P('''Choose number of tweets you want to analyze'''),
 
                                       dcc.Slider(50, 1000, 50,value=50,id='my-slider'),
-                                      html.H6(id="full-name"),
                                       html.Img(src="https://pbs.twimg.com/profile_images/1503591435324563456/foUrqiEw_400x400.jpg", id="profile-pic"),
+                                      html.H6(id="full-name"),
+                                      html.Div(id = "verified",
+                                      children = [
+                                          html.H6('verified'),
+                                          html.I(className="bi bi-check-circle-fill")
+                                      ], style = {'display': 'block'}),
                                       html.H6(id="positivity-score", children="Positivity-Score (1 is the most positive):"),
                                       html.H6(id="subjectivity-score", children="Subjectivity-Score (1 is the most subjective):")
                                       ]
@@ -47,6 +52,7 @@ app.layout = html.Div(children=[
     Output('profile-pic', component_property='src'),
     Output('positivity-score', component_property='children'),
     Output('subjectivity-score', component_property='children'),
+    Output('verified', component_property='style'),
     Input(component_id='my-input', component_property='value'),
     Input(component_id='my-slider', component_property='value')
     )
@@ -68,7 +74,11 @@ def update_output(value, selected_number_tweets):
 
     name = profileData.name
     profile_image_url = profileData.profile_image_url
-    return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string
+
+    if profileData.verified :
+        return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}
+
+    return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}
 
 
 if __name__ == '__main__':

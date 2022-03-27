@@ -632,4 +632,19 @@ Taken from https://codepen.io/chriddyp/pen/bWLwgP.css
   ::-webkit-scrollbar-thumb:hover {
     background: #d8d8d870 !important;
   }
+
+  .image-cropper {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+  img {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+  }
   

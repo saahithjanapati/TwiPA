@@ -4,3 +4,4 @@ textblob
 tweepy
 snscrape
 dash
+dash-bootstrap-components

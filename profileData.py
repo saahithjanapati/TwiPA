@@ -42,6 +42,6 @@ class profileData:
         self.created_at = user.created_at
         self.description = user.description
         self.location = user.location
-        self.profile_image_url = user.profile_image_url
+        self.profile_image_url = user.profile_image_url[:-11]+".jpg"
         self.verified = user.verified
         return

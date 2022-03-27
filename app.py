@@ -8,6 +8,12 @@ from sentiment_analysis import generate_graph
 from config import consumer_key, consumer_secret, access_token, access_token_secret
 
 
+
+
+import plotly.express as px
+import plotly.graph_objects as go
+
+
 app = Dash(__name__)
 
 auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
@@ -17,10 +23,25 @@ api = tweepy.API(auth)
 
 fig = go.Figure()
 
-app.layout = html.Div([
-    html.Div(dcc.Input(id='my-input', value='elonmusk', type='text')),
-     dcc.Graph(id='sentiment-graph')
-])
+
+
+app.layout = html.Div(children=[
+                      html.Div(className='row',  # Define the row element
+                               children=[
+                                  html.Div(className='four columns div-user-controls', 
+                                  children = [
+                                      html.H2('TwIPA - Sentiment Analysis'),
+                                      html.P('''Visualising time series with Plotly - Dash'''),
+                                      html.P('''Enter a Twitter Username of your choice.'''),
+                                      html.Div(dcc.Input(id='my-input', value='elonmusk', type='text'))
+                                      ]
+                                  ),  # Define the left element
+                                  html.Div(className='eight columns div-for-charts bg-grey', 
+                                  children = [
+                                      dcc.Graph(id='sentiment-graph')
+                                  ])  # Define the right element
+                                  ])
+                                ])
 
 
 @app.callback(

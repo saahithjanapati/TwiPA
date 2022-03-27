@@ -174,4 +174,4 @@ def display_hover_data(hoverData1, hoverData2, hoverData3):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)

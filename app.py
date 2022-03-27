@@ -8,22 +8,38 @@ from sentiment_analysis import generate_graph
 from config import consumer_key, consumer_secret, access_token, access_token_secret
 
 
+
+
+import plotly.express as px
+import plotly.graph_objects as go
+
+
 app = Dash(__name__)
 
 auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
 api = tweepy.API(auth)
 
 fig = go.Figure()
-app.layout = html.Div([
-    html.H6(id="full-name"),
-    html.Div(dcc.Input(id='my-input', value='elonmusk', type='text')),
-    
-    #profile pic
-    html.Img(src="https://pbs.twimg.com/profile_images/1503591435324563456/foUrqiEw_400x400.jpg", id="profile-pic"),
-    
-    html.H6("Positivity vs Time Graph"),
-    dcc.Graph(id='sentiment-graph')
-])
+
+app.layout = html.Div(children=[
+                      html.Div(className='row',  # Define the row element
+                               children=[
+                                  html.Div(className='four columns div-user-controls', 
+                                  children = [
+                                      html.H2('TwIPA - Sentiment Analysis'),
+                                      html.P('''Visualising time series with Plotly - Dash'''),
+                                      html.P('''Enter a Twitter Username of your choice.'''),
+                                      html.Div(dcc.Input(id='my-input', value='elonmusk', type='text')),
+                                      html.H6(id="full-name"),
+                                      html.Img(src="https://pbs.twimg.com/profile_images/1503591435324563456/foUrqiEw_400x400.jpg", id="profile-pic"),
+                                      ]
+                                  ),  # Define the left element
+                                  html.Div(className='eight columns div-for-charts bg-grey', 
+                                  children = [
+                                      dcc.Graph(id='sentiment-graph')
+                                  ])  # Define the right element
+                                  ])
+                                ])
 
 
 @app.callback(

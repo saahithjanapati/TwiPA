@@ -9,9 +9,9 @@ import json
 from sentiment_analysis import *
 from util import *
 from config import consumer_key, consumer_secret, access_token, access_token_secret
+import dash_bootstrap_components as dbc
 
-
-app = Dash(__name__)
+app = Dash(__name__, external_stylesheets=[dbc.icons.BOOTSTRAP])
 
 auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
 api = tweepy.API(auth)
@@ -58,6 +58,7 @@ app.layout = html.Div(children=[
     Output('profile-pic', component_property='src'),
     Output('positivity-score', component_property='children'),
     Output('subjectivity-score', component_property='children'),
+    Output('verified', component_property='style'),
     Input(component_id='my-input', component_property='value'),
     Input(component_id='my-slider', component_property='value')
     )
@@ -82,7 +83,11 @@ def update_output(value, selected_number_tweets):
 
     name = profileData.name
     profile_image_url = profileData.profile_image_url
-    return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string
+
+    if profileData.verified :
+        return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}
+
+    return fig1, fig2, name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}
 
 
 @app.callback(

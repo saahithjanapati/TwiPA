@@ -44,4 +44,5 @@ class profileData:
         self.location = user.location
         self.profile_image_url = user.profile_image_url[:-11]+".jpg"
         self.verified = user.verified
+        self.followers_count = user.followers_count
         return

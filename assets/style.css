@@ -632,4 +632,30 @@ Taken from https://codepen.io/chriddyp/pen/bWLwgP.css
   ::-webkit-scrollbar-thumb:hover {
     background: #d8d8d870 !important;
   }
+
+  .image-cropper {
+    width: 160px;
+    height: 160px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+  img {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+    align-items: center;
+  }
+
+  .parent {
+    padding-right: 10px;
+    float: left; 
+    text-align: center;
+  }
+  .child {
+    padding: 1rem 1rem;
+    vertical-align: middle;
+  }
   

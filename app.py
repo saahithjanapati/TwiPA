@@ -131,7 +131,7 @@ def update_output(value, selected_number_tweets):
     if profileData.verified :
         return True, fig1, fig2, fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
 
-    return True, fig1.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig2.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
+    return True, fig1.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig2.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}, num_followers
 
 
 

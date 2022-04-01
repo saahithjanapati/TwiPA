@@ -13,8 +13,9 @@ from config import consumer_key, consumer_secret, access_token, access_token_sec
 
 
 app = Dash(__name__, external_stylesheets=[dbc.icons.BOOTSTRAP])
-app.title = 'TwiPA'
 server = app.server
+app.title = 'TwiPA'
+
 
 auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
 api = tweepy.API(auth)

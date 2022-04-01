@@ -13,6 +13,7 @@ from config import consumer_key, consumer_secret, access_token, access_token_sec
 
 
 app = Dash(__name__, external_stylesheets=[dbc.icons.BOOTSTRAP])
+app.title = 'TwiPA'
 server = app.server
 
 auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
@@ -42,7 +43,7 @@ app.layout = html.Div(children=[
 
                                       html.P('''Choose number of tweets you want to analyze'''),
 
-                                      dcc.Slider(50, 1000, 100,value=250,id='my-slider'),
+                                      dcc.Slider(50, 1100, 100,value=250,id='my-slider'),
 
                                       html.Br(),
                                       html.Br(),

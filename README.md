@@ -1,14 +1,14 @@
 # TwiPA
-##Twitter Profile Analyzer
+## Twitter Profile Analyzer
 
 
-TwiPa is a tool that analyzed Twitter profiles. It performs sentiment analysis
+TwiPa is a tool that analyzes Twitter profiles. It performs sentiment analysis and clustering of tweets of a specific user and creates interactive graphs with this data.
 
-Link to HooHacks DevPost: https://devpost.com/software/twipa
-Link to Video Demo: https://www.youtube.com/watch?v=r8qPUJBqLbk
+- Link to HooHacks DevPost: https://devpost.com/software/twipa
+- Link to Video Demo: https://www.youtube.com/watch?v=r8qPUJBqLbk
 
 
-![Screenshot](screenshot)
+![Screenshot](https://github.com/saahithjanapati/TwiPA/blob/main/screenshot.png)
 
 ## How to Run
 Make sure you're running Python 3.8 or higher. Then:
@@ -29,4 +29,4 @@ python app.py
 ```
 
 
-Created by Siddharth Lakoju and Saahith Janapati
+Created by Siddharth Lakkoju and Saahith Janapati

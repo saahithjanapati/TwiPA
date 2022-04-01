@@ -29,7 +29,7 @@ app.layout = html.Div(children=[
                                   html.Div(className='four columns div-user-controls', 
                                   children = [
 
-                                      html.H1('TwiPA - Sentiment Analysis'),
+                                      html.H1('TwiPA'),
 
                                       html.P('''Enter a Twitter Username of your choice.'''),
 
@@ -131,7 +131,7 @@ def update_output(value, selected_number_tweets):
     if profileData.verified :
         return True, fig1, fig2, fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
 
-    return True, fig1.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig2.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'block'}, num_followers
+    return True, fig1.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig2.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)'}), fig3, name, profile_image_url, positivity_string, objectivity_string, {'display': 'none'}, num_followers
 
 
 
@@ -174,4 +174,4 @@ def display_hover_data(hoverData1, hoverData2, hoverData3):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)

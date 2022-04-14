@@ -1,8 +1,0 @@
-#bearerHandler = "AAAAAAAAAAAAAAAAAAAAANwvawEAAAAAKL1TCMBndw87QS2cFiFeD13mShY%3D44pgoVr68JbxOw4psH2gipz8NJNIteEFUsglRzRp5OfhBXnvoI"
-
-
-consumer_key = "nw0WLlqaezS8FvClxB1M7CEIN"
-consumer_secret = "a00NsrRdaTIWY8CdGftbNBSVc2agtz2BV52DaExtBqjKQ3A3T1"
-
-access_token = "790012092585766912-eiGGBsFRmZDY1HOV6zLok7VHT1zScBi"
-access_token_secret = "VNu1EPje5QFCBqLeKIfZwHOKQMPDLMZoGkZWkAO6P1yrx"

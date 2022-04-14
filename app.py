@@ -5,10 +5,13 @@ import plotly.express as px
 import pandas as pd
 import tweepy
 import dash_bootstrap_components as dbc
+import os
 
 from sentiment_analysis import *
 from util import *
 from clustering import *
+
+# Used for local testing, comment out for deployment
 from config import consumer_key, consumer_secret, access_token, access_token_secret
 
 
@@ -16,8 +19,12 @@ app = Dash(__name__, external_stylesheets=[dbc.icons.BOOTSTRAP])
 server = app.server
 app.title = 'TwiPA'
 
+# To Retrieve Twitter API keys, the second value is the default value if the respective os variable does not exist 
+auth = tweepy.OAuth1UserHandler(os.getenv("consumer_key", consumer_key), 
+                                os.getenv("consumer_secret", consumer_secret), 
+                                os.getenv("access_token", access_token), 
+                                os.getenv("access_token_secret", access_token_secret))
 
-auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
 api = tweepy.API(auth)
 
 fig = go.Figure()

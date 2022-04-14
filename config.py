@@ -1,8 +1,8 @@
-bearerHandler = "AAAAAAAAAAAAAAAAAAAAAOEvawEAAAAAkRiuf%2BJ1IILXLHutNpLXFbrdVQU%3DnjZ0OStAOGRBLpf2yI1EwNPyuflnigYRg1C1wtHo5aqgoK5rdY"
+#bearerHandler = "AAAAAAAAAAAAAAAAAAAAANwvawEAAAAAKL1TCMBndw87QS2cFiFeD13mShY%3D44pgoVr68JbxOw4psH2gipz8NJNIteEFUsglRzRp5OfhBXnvoI"
 
 
-consumer_key = "AYpXp29vtsP0Om70k25xtxM9G"
-consumer_secret = "nU6Ri00sW6MQWKPHYNJM0o0qJbgiDPUWlJJyoxFNHXeLsTqIUG"
+consumer_key = "nw0WLlqaezS8FvClxB1M7CEIN"
+consumer_secret = "a00NsrRdaTIWY8CdGftbNBSVc2agtz2BV52DaExtBqjKQ3A3T1"
 
-access_token = "1403873715348193281-FYPfWIeTvxNpTN0UVN5zkq8Onh0TSj"
-access_token_secret = "aaQXM081aqcBpJki8MbawSLuPzgPnFxmRQaXs11A05BTg"
+access_token = "790012092585766912-eiGGBsFRmZDY1HOV6zLok7VHT1zScBi"
+access_token_secret = "VNu1EPje5QFCBqLeKIfZwHOKQMPDLMZoGkZWkAO6P1yrx"

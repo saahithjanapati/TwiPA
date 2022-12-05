@@ -25,7 +25,6 @@ class profileData:
         self.tweets = []
         if api:
             self.populate_with_api(api)
-
         for i,tweet in enumerate(sntwitter.TwitterSearchScraper('from:'+self.screen_name).get_items()):
             print(i)
             if i>num_tweets: break
